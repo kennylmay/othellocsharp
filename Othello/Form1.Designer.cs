@@ -45,6 +45,8 @@
             this.whiteLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.turnLabel = new System.Windows.Forms.Label();
+            this.hardBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hardWhiteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,30 +76,31 @@
             this.whiteToolStripMenuItem,
             this.twoPlayerToolStripMenuItem});
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newGameToolStripMenuItem.Text = "New Game";
             // 
             // blackToolStripMenuItem
             // 
             this.blackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.easyBlackToolStripMenuItem,
-            this.mediumBlackToolStripMenuItem});
+            this.mediumBlackToolStripMenuItem,
+            this.hardBlackToolStripMenuItem});
             this.blackToolStripMenuItem.Name = "blackToolStripMenuItem";
-            this.blackToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.blackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.blackToolStripMenuItem.Text = "Human Black";
             this.blackToolStripMenuItem.Click += new System.EventHandler(this.blackToolStripMenuItem_Click);
             // 
             // easyBlackToolStripMenuItem
             // 
             this.easyBlackToolStripMenuItem.Name = "easyBlackToolStripMenuItem";
-            this.easyBlackToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.easyBlackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.easyBlackToolStripMenuItem.Text = "Easy";
             this.easyBlackToolStripMenuItem.Click += new System.EventHandler(this.easyBlackToolStripMenuItem_Click);
             // 
             // mediumBlackToolStripMenuItem
             // 
             this.mediumBlackToolStripMenuItem.Name = "mediumBlackToolStripMenuItem";
-            this.mediumBlackToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.mediumBlackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mediumBlackToolStripMenuItem.Text = "Medium";
             this.mediumBlackToolStripMenuItem.Click += new System.EventHandler(this.mediumBlackToolStripMenuItem_Click);
             // 
@@ -105,37 +108,38 @@
             // 
             this.whiteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.easyWhiteToolStripMenuItem,
-            this.mediumWhiteToolStripMenuItem});
+            this.mediumWhiteToolStripMenuItem,
+            this.hardWhiteToolStripMenuItem1});
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.whiteToolStripMenuItem.Text = "Human White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.whiteToolStripMenuItem_Click);
             // 
             // easyWhiteToolStripMenuItem
             // 
             this.easyWhiteToolStripMenuItem.Name = "easyWhiteToolStripMenuItem";
-            this.easyWhiteToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.easyWhiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.easyWhiteToolStripMenuItem.Text = "Easy";
             this.easyWhiteToolStripMenuItem.Click += new System.EventHandler(this.easyWhiteToolStripMenuItem_Click);
             // 
             // mediumWhiteToolStripMenuItem
             // 
             this.mediumWhiteToolStripMenuItem.Name = "mediumWhiteToolStripMenuItem";
-            this.mediumWhiteToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.mediumWhiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mediumWhiteToolStripMenuItem.Text = "Medium";
             this.mediumWhiteToolStripMenuItem.Click += new System.EventHandler(this.mediumWhiteToolStripMenuItem_Click);
             // 
             // twoPlayerToolStripMenuItem
             // 
             this.twoPlayerToolStripMenuItem.Name = "twoPlayerToolStripMenuItem";
-            this.twoPlayerToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.twoPlayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.twoPlayerToolStripMenuItem.Text = "Two Player";
             this.twoPlayerToolStripMenuItem.Click += new System.EventHandler(this.twoPlayerToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -196,6 +200,20 @@
             this.turnLabel.Size = new System.Drawing.Size(0, 13);
             this.turnLabel.TabIndex = 7;
             // 
+            // hardBlackToolStripMenuItem
+            // 
+            this.hardBlackToolStripMenuItem.Name = "hardBlackToolStripMenuItem";
+            this.hardBlackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hardBlackToolStripMenuItem.Text = "Hard";
+            this.hardBlackToolStripMenuItem.Click += new System.EventHandler(this.hardBlackToolStripMenuItem_Click);
+            // 
+            // hardWhiteToolStripMenuItem1
+            // 
+            this.hardWhiteToolStripMenuItem1.Name = "hardWhiteToolStripMenuItem1";
+            this.hardWhiteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.hardWhiteToolStripMenuItem1.Text = "Hard";
+            this.hardWhiteToolStripMenuItem1.Click += new System.EventHandler(this.hardWhiteToolStripMenuItem1_Click);
+            // 
             // Othello
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -244,6 +262,8 @@
         private System.Windows.Forms.ToolStripMenuItem mediumBlackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem easyWhiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mediumWhiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hardBlackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hardWhiteToolStripMenuItem1;
     }
 }
 

@@ -12,24 +12,42 @@ namespace WindowsFormsApplication1
             public int x;
             public int y;
             public int value;
-            public PointValue(int X, int Y, int Value)
+            public PointValue(int x, int y, int value)
             {
-                x = X;
-                y = Y;
-                value = Value;
+                this.x = x;
+                this.y = y;
+                this.value = value;
             }
         }
         public class BoardValue
         {
-            public int[,] Board;
+            public int[,] board;
             public int value;
-            public BoardValue(int[,] board, int Value)
+            public BoardValue(int[,] Board, int Value)
             {
-                Board = new int[8, 8];
-                Array.Copy(board, Board, board.Length);
+                board = new int[8, 8];
+                Array.Copy(Board, this.board, Board.Length);
                 value = Value;
             }
+            public BoardValue() { }
+
         }
+
+        public class Node : BoardValue
+        {
+            public int[] masterParent = new int[2];
+            public int depth = 0;
+             public Node(int[,] Board, int value, int x, int y, int depth)
+            {
+                board = new int[8, 8];
+                Array.Copy(Board, this.board, Board.Length);
+                this.value = value;
+                masterParent[0] = x;
+                masterParent[1] = y;
+                this.depth = depth;
+            }
+        }
+
 
         int[,] weights = new int[8, 8];
         int[,] pieces = new int[8, 8];
@@ -201,6 +219,18 @@ namespace WindowsFormsApplication1
                 {
                     turn = computer;
                     if (!lookAheadComputerMove())
+                    {
+                        break;
+                    }
+                }
+            }
+            else if (twoplayer == false && level == 3)
+            {
+                lookAheadComputerMove();
+                while (!isPossibleMove(pieces, human))
+                {
+                    turn = computer;
+                    if (!miniMaxMove())
                     {
                         break;
                     }
@@ -795,6 +825,93 @@ namespace WindowsFormsApplication1
 
         }
 
+        private bool miniMaxMove(){
+            // If the computer cannot move return false
+            if (!isPossibleMove(pieces, computer))
+            {
+                turn = human;
+                return false;
+            }
+            // Make a new list to hold all possible boards(states) of the game and
+            // keep track of the parent that the move came from.
+            List<Node> nodes = new List<Node>();
+           
+            // Find all possible moves for the current board.
+            int currTurn = computer;
+            int depth = 0;
+            List<PointValue> list = findValidMoves(pieces, currTurn);
+
+            // For all possible moves on the current board make all possible moves and 
+            // put it on the list. Keep track of the parent move.
+            for (int i = 0; i < list.Count; i++)
+            {
+                int[,] board = new int[8, 8];
+                Array.Copy(pieces, board, pieces.Length);
+                flipPieces(board, list[i].x, list[i].y, false);
+                Node node = new Node(board, countBoard(board), list[i].x, list[i].y, depth);
+                nodes.Add(node);
+            }
+
+            for (int count = 0; count < 12; count++)
+            {
+                if (currTurn == human){
+                    currTurn = computer;
+                }
+                else{
+                  currTurn = human;
+                }
+
+                depth++;
+
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    int[,] board = new int[8, 8];
+                    Array.Copy(nodes[i].board, board, nodes[i].board.Length);
+
+                    // Find all possible moves for the previous depth.
+                    if (nodes[i].depth == depth - 1)
+                    {
+                        List<PointValue> subList = findValidMoves(nodes[i].board, currTurn);
+                        for (int x = 0; x < subList.Count; x++)
+                        {
+                            int[,] newBoard = new int[8, 8];
+                            Array.Copy(nodes[i].board, newBoard, nodes[i].board.Length);
+                            flipPieces(newBoard, subList[x].x, subList[x].y, false);
+                            Node node = new Node(newBoard, countBoard(newBoard), nodes[i].masterParent[0], nodes[i].masterParent[1], depth);
+                            nodes.Add(node);
+                        }
+                    }
+                }
+            }
+
+            int best_board_value = -999999;
+            int best_board = -1;
+            int max_depth = 0;
+            for (int i = 0; i < nodes.Count; i++){         
+                if (max_depth < nodes[i].depth)
+                {
+                    max_depth = nodes[i].depth;
+                }
+            }
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].depth == max_depth)
+                {
+                    if (nodes[i].value > best_board_value)
+                    {
+                        best_board_value = nodes[i].value;
+                        best_board = i;
+                    }
+                }
+            }
+
+            pieces[nodes[best_board].masterParent[0], nodes[best_board].masterParent[1]] = computer;
+            flipPieces(pieces, nodes[best_board].masterParent[0], nodes[best_board].masterParent[1], false);
+            updateBoard();
+            turn = human;
+            return true;
+        }
+
         private void boardStart()
         {
             turn = black;
@@ -910,6 +1027,26 @@ namespace WindowsFormsApplication1
         private void Othello_Load_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void hardBlackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            level = 3;
+            computer = white;
+            human = black;
+            twoplayer = false;
+            boardStart();
+            
+        }
+
+        private void hardWhiteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            level = 3;
+            computer = black;
+            human = white;
+            twoplayer = false;
+            boardStart();
+            miniMaxMove();
         }
     }
 }
