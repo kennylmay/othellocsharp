@@ -226,7 +226,7 @@ namespace WindowsFormsApplication1
             }
             else if (twoplayer == false && level == 3)
             {
-                lookAheadComputerMove();
+                miniMaxMove();
                 while (!isPossibleMove(pieces, human))
                 {
                     turn = computer;
@@ -769,6 +769,7 @@ namespace WindowsFormsApplication1
             flipPieces(pieces, point.x, point.y, false);
             updateBoard();
             turn = human;
+            System.Media.SystemSounds.Exclamation.Play();
             return true;
         }
 
@@ -821,6 +822,7 @@ namespace WindowsFormsApplication1
             flipPieces(pieces, list[best_board].x, list[best_board].y, false);
             updateBoard();
             turn = human;
+            System.Media.SystemSounds.Exclamation.Play();
             return true;
 
         }
@@ -852,7 +854,8 @@ namespace WindowsFormsApplication1
                 nodes.Add(node);
             }
 
-            for (int count = 0; count < 12; count++)
+            // Continue to look at each board at each level and calculate the value of each move
+            for (int count = 0; count < 4; count++)
             {
                 if (currTurn == human){
                     currTurn = computer;
@@ -863,15 +866,17 @@ namespace WindowsFormsApplication1
 
                 depth++;
 
+                // For every board in the list so far
                 for (int i = 0; i < nodes.Count; i++)
                 {
                     int[,] board = new int[8, 8];
                     Array.Copy(nodes[i].board, board, nodes[i].board.Length);
 
-                    // Find all possible moves for the previous depth.
+                    // Find all possible moves for the current depth
                     if (nodes[i].depth == depth - 1)
                     {
                         List<PointValue> subList = findValidMoves(nodes[i].board, currTurn);
+                        // For each turn on the board in question make every possible move and record its value and parent
                         for (int x = 0; x < subList.Count; x++)
                         {
                             int[,] newBoard = new int[8, 8];
@@ -884,6 +889,7 @@ namespace WindowsFormsApplication1
                 }
             }
 
+            // Find the best board at the higest depth
             int best_board_value = -999999;
             int best_board = -1;
             int max_depth = 0;
@@ -905,10 +911,12 @@ namespace WindowsFormsApplication1
                 }
             }
 
+            // Make the best move that was found
             pieces[nodes[best_board].masterParent[0], nodes[best_board].masterParent[1]] = computer;
             flipPieces(pieces, nodes[best_board].masterParent[0], nodes[best_board].masterParent[1], false);
             updateBoard();
             turn = human;
+            System.Media.SystemSounds.Exclamation.Play();
             return true;
         }
 
