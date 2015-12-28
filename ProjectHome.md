@@ -1,0 +1,1 @@
+Project for artificial intelligence class.
